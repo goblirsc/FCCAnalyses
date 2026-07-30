@@ -9,7 +9,8 @@ else
 fi 
 
 # get the directory where this script is located. This should be the FCCAnalysis folder.  
-BASE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/..
+export FCCana_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/install
+export BASE_DIR=${FCCana_DIR}/../..
 
 # Add Delphes, assumed to be one folder above FCCAnalysis 
 export DELPHES_DIR="${BASE_DIR}/delphes"
@@ -26,7 +27,6 @@ export PATH=${k4SD_DIR}/bin:$PATH
 export CMAKE_PREFIX_PATH=${k4SD_DIR}:$CMAKE_PREFIX_PATH
 
 # Add FCCAnalysis, assumed to be the folder we are in now 
-export FCCana_DIR="${BASE_DIR}/FCCAnalyses/install/"
 export LD_LIBRARY_PATH=${FCCana_DIR}/lib:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=${FCCana_DIR}/lib64:$LD_LIBRARY_PATH
 export PATH=${FCCana_DIR}/bin:$PATH 
