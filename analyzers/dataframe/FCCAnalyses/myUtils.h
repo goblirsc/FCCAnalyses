@@ -49,10 +49,9 @@ namespace myUtils{
 							 ROOT::VecOps::RVec<int> pvindex);
   };
 
-
-
-  struct build_tau23pi {
-    build_tau23pi( float arg_masslow, float arg_masshigh, float arg_p, float arg_angle, bool arg_rho);
+  struct sel_tau23pi {
+    sel_tau23pi(float arg_masslow, float arg_masshigh, float arg_p,
+                float arg_angle, bool arg_rho);
     float m_masslow=0.05;
     float m_masshigh=3.0;
     float m_p=1.;
@@ -61,8 +60,6 @@ namespace myUtils{
     ROOT::VecOps::RVec<FCCAnalysesComposite2> operator() (ROOT::VecOps::RVec<VertexingUtils::FCCAnalysesVertex> vertex,
 							  ROOT::VecOps::RVec<edm4hep::ReconstructedParticleData> recop);
   };
-
-
 
   struct sel_PV {
     sel_PV(bool arg_closest);
@@ -106,11 +103,18 @@ namespace myUtils{
   ROOT::VecOps::RVec<VertexingUtils::FCCAnalysesVertex>
   merge_VertexObjet(ROOT::VecOps::RVec<VertexingUtils::FCCAnalysesVertex> in);
 
-  ROOT::VecOps::RVec<VertexingUtils::FCCAnalysesVertex> get_VertexObject(ROOT::VecOps::RVec<VertexingUtils::FCCAnalysesVertexMC> mcver,
-									 ROOT::VecOps::RVec<edm4hep::ReconstructedParticleData> reco,
-									 ROOT::VecOps::RVec<edm4hep::TrackState> tracks,
-									 ROOT::VecOps::RVec<int> recin,
-									 ROOT::VecOps::RVec<int> mcin);
+  /// ComputeMomentaAtVertex controls whether updated_track_momentum_at_vertex
+  /// is filled for each returned vertex: it requires building a Delphes
+  /// VertexMore object, whose cost scales as O(ntracks^3) and dominates the
+  /// total runtime for events with many tracks. Set to false when only the
+  /// vertex position/chi2/primary flag is needed (e.g. hasPV()) -- see
+  /// https://github.com/HEP-FCC/FCCAnalyses/issues/378.
+  ROOT::VecOps::RVec<VertexingUtils::FCCAnalysesVertex> get_VertexObject(
+      ROOT::VecOps::RVec<VertexingUtils::FCCAnalysesVertexMC> mcver,
+      ROOT::VecOps::RVec<edm4hep::ReconstructedParticleData> reco,
+      ROOT::VecOps::RVec<edm4hep::TrackState> tracks,
+      ROOT::VecOps::RVec<int> recin, ROOT::VecOps::RVec<int> mcin,
+      bool ComputeMomentaAtVertex = true);
 
   ROOT::VecOps::RVec<float> get_Vertex_mass(ROOT::VecOps::RVec<VertexingUtils::FCCAnalysesVertex> vertex,
 					    ROOT::VecOps::RVec<edm4hep::ReconstructedParticleData> reco);

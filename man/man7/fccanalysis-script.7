@@ -1,6 +1,6 @@
 .\" Manpage for fccanalysis-script
 .\" Contact FCC-PED-SoftwareAndComputing-Analysis@cern.ch to correct errors or typos.
-.TH FCCANALYSIS\-SCRIPT 7 "12 Nov 2025" "0.12.0" "fccanalysis-script man page"
+.TH FCCANALYSIS\-SCRIPT 7 "12 Nov 2025" "0.13.1" "fccanalysis-script man page"
 .SH NAME
 \fBfccanalysis\-script\fR \(en analysis steering script specification
 
@@ -128,6 +128,18 @@ The analysis can be split into several output chunks (useful on distributed
 systems)\&.
 .br
 Default value: 1
+.in -4
+\fIstride\fR
+.in +4
+Specifies how to stride through the events of the sample\&.
+.br
+Default value: None (no striding)
+.in -4
+\fIn-events-max\fR
+.in +4
+Limits the maximum number of events to process for the sample\&.
+.br
+Default value: None (no limit)
 .TP
 \fBprod_tag\fR (mandatory)
 Provides information where to find input files. There are several way how to
@@ -136,6 +148,11 @@ the sub-folders of $FCCDICTSDIR\&.
 .TP
 \fBoutput_dir\fR (mandatory)
 User can specify the directory for the output files\&.
+.TP
+\fBoutput_format\fR (optional)
+Specifies the output ROOT file format. Accepted values are \fBttree\fR and \fBrntuple\fR.
+.br
+Default value: ttree
 .TP
 \fBanalysis_name\fR (optional)
 Optional name for the analysis
